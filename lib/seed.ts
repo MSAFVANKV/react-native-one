@@ -8,32 +8,38 @@ import {
 } from "./data";
 
 const COLLECTIONS = {
-  AGENT: config.agentsCollectionId,
-  REVIEWS: config.reviewsCollectionId,
-  GALLERY: config.galleriesCollectionId,
-  PROPERTY: config.propertiesCollectionId,
+  agents: config.agentsCollectionId,
+  reviews: config.reviewsCollectionId,
+  galleries: config.galleriesCollectionId,
+  properties: config.propertiesCollectionId,
 };
+console.log("----------------------");
+console.log("Agents Collection ID:", config.agentsCollectionId);
+console.log("----------------------");
+
+console.log("Reviews Collection ID:", config.reviewsCollectionId);
+console.log("Galleries Collection ID:", config.galleriesCollectionId);
+console.log("Properties Collection ID:", config.propertiesCollectionId);
+console.log("Database ID:", config.databaseId);
 
 const propertyTypes = [
   "House",
-  "Townhomes",
-  "Condos",
-  "Duplexes",
-  "Studios",
+  "Townhouse",
+  "Conda",
+  "Duplex",
+  "Studio",
   "Villa",
-  "Apartments",
-  "Others",
+  "Appartment",
+  "Other",
 ];
 
 const facilities = [
   "Laundry",
-  "Car Parking",
-  "Sports Center",
-  "Cutlery",
+  "Parking",
   "Gym",
-  "Swimming pool",
   "Wifi",
-  "Pet Center",
+  "Pet-friendly",
+  "Cutlery",
 ];
 
 function getRandomSubset<T>(
@@ -79,6 +85,8 @@ async function seed() {
         config.databaseId!,
         collectionId!
       );
+      console.log(documents, "seeded documents");
+
       for (const doc of documents.documents) {
         await databases.deleteDocument(
           config.databaseId!,
@@ -95,7 +103,7 @@ async function seed() {
     for (let i = 1; i <= 5; i++) {
       const agent = await databases.createDocument(
         config.databaseId!,
-        COLLECTIONS.AGENT!,
+        COLLECTIONS.agents!,
         ID.unique(),
         {
           name: `Agent ${i}`,
@@ -112,7 +120,7 @@ async function seed() {
     for (let i = 1; i <= 20; i++) {
       const review = await databases.createDocument(
         config.databaseId!,
-        COLLECTIONS.REVIEWS!,
+        COLLECTIONS.reviews!,
         ID.unique(),
         {
           name: `Reviewer ${i}`,
@@ -130,7 +138,7 @@ async function seed() {
     for (const image of galleryImages) {
       const gallery = await databases.createDocument(
         config.databaseId!,
-        COLLECTIONS.GALLERY!,
+        COLLECTIONS.galleries!,
         ID.unique(),
         { image }
       );
@@ -159,7 +167,7 @@ async function seed() {
 
       const property = await databases.createDocument(
         config.databaseId!,
-        COLLECTIONS.PROPERTY!,
+        COLLECTIONS.properties!,
         ID.unique(),
         {
           name: `Property ${i}`,
